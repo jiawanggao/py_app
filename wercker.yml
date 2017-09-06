@@ -1,0 +1,30 @@
+box: python:2.7-slim
+dev:
+  steps:
+    - pip-install
+    - internal/watch:
+        code: python app.py
+        reload: true
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    # A step that executes `pip install` command
+    - pip-install
+
+    # A custom script step, name value is used in the UI
+    # and the code value contains the command that get executed
+    - script:
+        name: python unit test
+        code: |
+          python app_test.py
+deploy:
+  steps:
+    - internal/docker-push:
+        username: gaojw
+        password: 0921abc
+        tag: my-amazing-tag
+        cmd: my-amazing-command
+        ports: "5000"
+        repository: gaojw/py_app
+        registry: https://registry.hub.docker.com
