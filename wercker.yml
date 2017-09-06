@@ -21,10 +21,10 @@ build:
 deploy:
   steps:
     - internal/docker-push:
-        username: gaojw
-        password: 0921abc
+        username: $DOCKERHUB_USERNAME
+        password: $DOCKERHUB_PASSWORD
         tag: my-amazing-tag
         cmd: my-amazing-command
         ports: "5000"
-        repository: gaojw/py_app
+        repository: $DOCKERHUB_REPO
         registry: https://registry.hub.docker.com
