@@ -25,7 +25,8 @@ deploy:
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_PASSWORD
         tag: pyapp-test
-        cmd: my-amazing-command
+        entrypoint: python
+        cmd: app.py
         ports: "5000"
         repository: $DOCKERHUB_REPO
         registry: https://registry.hub.docker.com
