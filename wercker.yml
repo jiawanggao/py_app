@@ -17,6 +17,7 @@ build:
     - script:
         name: python unit test
         code: |
+          echo "python version $(python --version) running"
           python app_test.py
 deploy:
   steps:
