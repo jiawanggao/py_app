@@ -54,7 +54,7 @@ run_on_occs:
                "placement":{"pool_id":"default"},
                "quantities":{"mytest1":1},"stack":
                {
-                 "content":"version: 2\nservices:\n  mytest1:\n    image: \"gaojw/poc_postgres:latest\"\n    \n",
+                 "content":"version: 2\nservices:\n  mytest1:\n    image: \"gaojw/py_app:pyapp-test\"\n    \n",
                  "service_id":"mytest1",
                  "service_name":"mytest1",
                  "subtype":"service"
