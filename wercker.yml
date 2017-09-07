@@ -26,9 +26,7 @@ deploy:
         password: $DOCKERHUB_PASSWORD
         tag: pyapp-test
         entrypoint: python
-        volumes: /home/oracle/workspace/isv_zephyr/py_app /
-        working-dir: /
-        cmd: app.py
+        cmd: $WERCKER_ROOT/app.py
         ports: "5000"
         repository: $DOCKERHUB_REPO
         registry: https://registry.hub.docker.com
