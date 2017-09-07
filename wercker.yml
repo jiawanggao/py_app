@@ -35,6 +35,6 @@ run_on_occs:
   steps:
     - script:
         name: create deployment on occs
-       code: |  
+        code: |  
           echo "Get auth token*********************"
           curl -k "https://140.86.32.204/api/auth" -d '{"username":"admin","password":"Welcome1#"}'
