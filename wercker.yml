@@ -66,4 +66,3 @@ run_on_occs:
           curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/ --data "@deployment.json"
           curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID/stop
           curl -sk -X GET -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID
-          curl -sk -X DELETE -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID
