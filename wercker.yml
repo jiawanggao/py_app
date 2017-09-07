@@ -21,14 +21,13 @@ build:
           python app_test.py
 deploy:
   steps:
-    - script:
-	name: copy app.py file
-	code: cp app.py .
     - internal/docker-push:
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_PASSWORD
         tag: pyapp-test
         entrypoint: python
+        volumes: /home/oracle/workspace/isv_zephyr/py_app /
+        working-dir: /
         cmd: app.py
         ports: "5000"
         repository: $DOCKERHUB_REPO
