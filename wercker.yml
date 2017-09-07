@@ -33,6 +33,8 @@ deploy:
 # add pipline
 run_on_occs:
   steps:
+    - install-packages:
+        packages: curl
     - script:
         name: create deployment on occs
         code: |  
