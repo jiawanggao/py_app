@@ -30,6 +30,7 @@ deploy:
         ports: "5000"
         repository: $DOCKERHUB_REPO
         registry: https://registry.hub.docker.com
+# add pipline
 run_on_occs:
   steps:
     - script:
