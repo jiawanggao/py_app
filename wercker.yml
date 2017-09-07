@@ -32,35 +32,36 @@ deploy:
         registry: https://registry.hub.docker.com
 run_on_occs:
   steps:
-    name: create deployment on occs
-    code: |
-      echo "Get auth token*********************"
-      AUTH_TOKEN=$(curl -k "https://140.86.32.204/api/auth" -d '{"username":"admin","password":"Welcome1#"}' | python -c "import sys, json; print json.load(sys.stdin)['token']")
-      echo $AUTH_TOKEN
-      echo "Get session token*********************"
-      SESSION_TOKEN=$(curl -k  -H "Authorization: Session $AUTH_TOKEN" "https://140.86.32.204/api/token"| python -c "import sys, json; print json.load(sys.stdin)['token']")
-      curl -k -H "Authorization: Session $AUTH_TOKEN" "https://140.86.32.204/api/token"
-      export DEP_ID=$((1 + RANDOM % 1000))
-      echo "creating deployment..."
-      cat > deployment.json << EOF
-         {
-          "deployment_id":"myDeployment$DEP_ID",
-          "deployment_name":"myDeployment$DEP_ID",
-          "desired_state":1,
-          "placement":{"pool_id":"default"},
-          "quantities":{"mytest1":1},"stack":
-          {
-            "content":"version: 2\nservices:\n  mytest1:\n    image: \"gaojw/py_app:pyapp-test\"\n    \n",
-            "service_id":"mytest1",
-            "service_name":"mytest1",
-            "subtype":"service"
-          }
-        }
+    - script:
+	name: create deployment on occs
+    	code: |
+      	echo "Get auth token*********************"
+      	AUTH_TOKEN=$(curl -k "https://140.86.32.204/api/auth" -d '{"username":"admin","password":"Welcome1#"}' | python -c "import sys, json; print json.load(sys.stdin)['token']")
+      	echo $AUTH_TOKEN
+      	echo "Get session token*********************"
+      	SESSION_TOKEN=$(curl -k  -H "Authorization: Session $AUTH_TOKEN" "https://140.86.32.204/api/token"| python -c "import sys, json; print json.load(sys.stdin)['token']")
+      	curl -k -H "Authorization: Session $AUTH_TOKEN" "https://140.86.32.204/api/token"
+      	export DEP_ID=$((1 + RANDOM % 1000))
+      	echo "creating deployment..."
+      	cat > deployment.json << EOF
+        	 {
+         	 "deployment_id":"myDeployment$DEP_ID",
+         	 "deployment_name":"myDeployment$DEP_ID",
+         	 "desired_state":1,
+         	 "placement":{"pool_id":"default"},
+          	"quantities":{"mytest1":1},"stack":
+         	 {
+         	   "content":"version: 2\nservices:\n  mytest1:\n    image: \"gaojw/py_app:pyapp-test\"\n    \n",
+            	"service_id":"mytest1",
+            	"service_name":"mytest1",
+            	"subtype":"service"
+         	 }
+       	 }
 
-      EOF
-      ls
-      cat deployment.json
-      curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/ --data "@deployment.json"
-      curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID/stop
-      curl -sk -X GET -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID
-      curl -sk -X DELETE -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID 
+      	EOF
+     	ls
+     	cat deployment.json
+      	curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/ --data "@deployment.json"
+      	curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID/stop
+      	curl -sk -X GET -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID
+      	curl -sk -X DELETE -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID 
