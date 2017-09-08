@@ -40,7 +40,6 @@ run_on_occs:
         code: |  
           echo "Get auth token*********************"
           AUTH_TOKEN=$(curl -k "https://140.86.32.204/api/auth" -d '{"username":"admin","password":"Welcome1#"}' | python -c "import sys, json; print json.load(sys.stdin)['token']")
-          echo $AUTH_TOKEN
           echo "Get session token*********************"
           SESSION_TOKEN=$(curl -k  -H "Authorization: Session $AUTH_TOKEN" "https://140.86.32.204/api/token"| python -c "import sys, json; print json.load(sys.stdin)['token']")
           curl -k -H "Authorization: Session $AUTH_TOKEN" "https://140.86.32.204/api/token"
@@ -52,7 +51,8 @@ run_on_occs:
                "deployment_name":"myDeployment$DEP_ID",
                "desired_state":1,
                "placement":{"pool_id":"default"},
-               "quantities":{"mytest1":1},"stack":
+               "quantities":{"mytest1":1},
+               "stack":
                {
                  "content":"version: 2\nservices:\n  mytest1:\n    image: \"gaojw/py_app:pyapp-test\"\n    \n",
                  "service_id":"mytest1",
@@ -61,8 +61,6 @@ run_on_occs:
                 }
               }
           EOF
-          ls
-          cat deployment.json
           curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/ --data "@deployment.json"
           curl -sk -X POST -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID/stop
           curl -sk -X GET -H "Authorization: Bearer $SESSION_TOKEN" https://140.86.32.204/api/v2/deployments/myDeployment$DEP_ID
