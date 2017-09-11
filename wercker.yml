@@ -31,7 +31,7 @@ deploy:
     - internal/docker-push:
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_PASSWORD
-        tag: pyapp-test
+        tag: $APP_TAG
         cmd: python /pipeline/source/app.py
         ports: "5000"
         repository: $DOCKERHUB_REPO
@@ -56,7 +56,7 @@ run_on_occs:
                "quantities":{"mytest1":1},
                "stack":
                {
-                 "content":"version: 2\nservices:\n  mytest1:\n    image: \"gaojw/py_app:pyapp-test\"\n    \n",
+                 "content":"version: 2\nservices:\n  mytest1:\n    image: \"$DOCKERHUB_REPO:$APP_TAG\"\n    \n",
                  "service_id":"mytest1",
                  "service_name":"mytest1",
                  "subtype":"service"
@@ -64,5 +64,5 @@ run_on_occs:
               }
           EOF
           curl -sk -X POST -H "Authorization: Bearer $OCCS_API_TOKEN" ${OCCS_URL}/api/v2/deployments/ --data "@deployment.json"
-          curl -sk -X POST -H "Authorization: Bearer $OCCS_API_TOKEN" ${OCCS_URL}/api/v2/deployments/myDeployment$DEP_ID/stop
-          curl -sk -X GET -H "Authorization: Bearer $OCCS_API_TOKEN" ${OCCS_URL}/api/v2/deployments/myDeployment$DEP_ID
+#          curl -sk -X POST -H "Authorization: Bearer $OCCS_API_TOKEN" ${OCCS_URL}/api/v2/deployments/myDeployment$DEP_ID/stop
+#          curl -sk -X GET -H "Authorization: Bearer $OCCS_API_TOKEN" ${OCCS_URL}/api/v2/deployments/myDeployment$DEP_ID
