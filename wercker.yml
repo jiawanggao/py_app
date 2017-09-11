@@ -45,8 +45,8 @@ run_on_occs:
         name: create deployment on occs
         code: |  
           echo "Get auth token*********************"
-          echo 'user info:{"username":"${OCCS_USERNAME}","password":"${OCCS_PASSWORD}"}'
-          export USER_INFO = '{"username":"${OCCS_USERNAME}","password":"${OCCS_PASSWORD}"}'
+          echo 'user info:{"username":"$OCCS_USERNAME","password":"$OCCS_PASSWORD"}'
+          export USER_INFO='{"username":"$OCCS_USERNAME","password":"$OCCS_PASSWORD"}'
           AUTH_TOKEN=$(curl -k "${OCCS_URL}/api/auth" -d '${USER_INFO}' | python -c "import sys, json; print json.load(sys.stdin)['token']")
           echo "Get session token*********************"
           SESSION_TOKEN=$(curl -k  -H "Authorization: Session $AUTH_TOKEN" "${OCCS_URL}/api/token"| python -c "import sys, json; print json.load(sys.stdin)['token']")
